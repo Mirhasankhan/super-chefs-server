@@ -5,7 +5,6 @@ const cors = require('cors')
 app.use(cors())
 
 const chefData = require('./data/chefData.json');
-const recipes = require('./data/recipes.json');
 
 app.get('/', (req, res)=>{
     res.send('server side running here at 5000')
@@ -13,10 +12,12 @@ app.get('/', (req, res)=>{
 
 app.get('/chef', (req, res)=>{
     res.send(chefData)
-})
+});
 
-app.get('/recipes', (req, res)=>{
-    res.send(recipes)
+app.get('/chef/:id', (req, res)=>{
+    const id = req.params.id;
+    const selectedChef = chefData.find(chef => chef.id == id)
+    res.send(selectedChef)
 })
 
 app.listen(port, ()=>{
